@@ -1,6 +1,6 @@
-# Guia para Configuração de `.env` com Prisma
+# Guia para Configuração de `.env` com Prisma e Guia de React Native com Expo
 
-Este guia descreve como configurar o arquivo `.env` para dois tipos de banco de dados diferentes utilizando Prisma. Cada configuração será tratada de forma independente.
+Este guia descreve como configurar o arquivo `.env` para dois tipos de banco de dados diferentes utilizando Prisma. Além disso, inclui um guia para iniciar um projeto React Native com Expo.
 
 ---
 
@@ -142,4 +142,52 @@ Este guia descreve como configurar o arquivo `.env` para dois tipos de banco de 
 
 ---
 
-Pronto! Agora você sabe como configurar o arquivo `.env` para SQLite e PostgreSQL utilizando Prisma.
+## 3. Guia para Iniciar um Projeto React Native com Expo
+
+### Passos:
+1. **Instale o Expo CLI**:
+    ```bash
+    npm install -g expo-cli
+    ```
+
+2. **Crie um novo projeto Expo**:
+    ```bash
+    expo init meu-projeto
+    cd meu-projeto
+    ```
+
+3. **Inicie o servidor de desenvolvimento**:
+    ```bash
+    expo start
+    ```
+
+4. **Edite o código do aplicativo**:
+    Abra o arquivo `App.js` e comece a editar o código. Exemplo:
+    ```javascript
+    import React from 'react';
+    import { Text, View, StyleSheet } from 'react-native';
+
+    export default function App() {
+      return (
+        <View style={styles.container}>
+          <Text>Bem-vindo ao React Native com Expo!</Text>
+        </View>
+      );
+    }
+
+    const styles = StyleSheet.create({
+      container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+      },
+    });
+    ```
+
+5. **Teste no dispositivo ou emulador**:
+    Use o aplicativo Expo Go no seu dispositivo ou um emulador para visualizar o projeto.
+
+---
+
+Pronto! Agora você sabe como configurar o arquivo `.env` para SQLite e PostgreSQL utilizando Prisma, além de iniciar um projeto React Native com Expo.  
