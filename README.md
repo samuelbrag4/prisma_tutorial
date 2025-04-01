@@ -197,5 +197,3 @@ Este guia descreve como configurar projetos utilizando Node.js, Next.js, Prisma,
 - **Solução**: Execute `npx prisma generate`.
 
 ---
-
-Pronto! Agora você pode criar projetos com Node.js, Next.js, Prisma, React e Expo.
