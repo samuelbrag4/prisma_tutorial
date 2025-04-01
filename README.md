@@ -1,148 +1,106 @@
-# Guia para Configuração de `.env` com Prisma e Guia de React Native com Expo
+# Guia para Inicializar um Projeto com Node.js, Next.js, Prisma, React e Expo no Windows
 
-Este guia descreve como configurar o arquivo `.env` para dois tipos de banco de dados diferentes utilizando Prisma. Além disso, inclui um guia para iniciar um projeto React Native com Expo.
+Este guia descreve como configurar projetos utilizando Node.js, Next.js, Prisma, React e Expo, executando os comandos no terminal do VS Code.
 
 ---
 
-## 1. Configuração com SQLite
+## 1. Inicializando o Projeto Node.js
 
 ### Passos:
-1. **Crie um novo projeto Node.js**:
+1. **Crie uma pasta para o projeto**:
     ```bash
-    mkdir projeto-sqlite
-    cd projeto-sqlite
+    mkdir meu-projeto
+    cd meu-projeto
+    ```
+
+2. **Inicialize o projeto Node.js**:
+    ```bash
     npm init -y
     ```
 
-2. **Instale o Prisma**:
+3. **Instale o Next.js e React**:
+    ```bash
+    npm install next react react-dom
+    ```
+
+4. **Adicione um script para rodar o Next.js** no `package.json`:
+    ```json
+    "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start"
+    }
+    ```
+
+5. **Crie a estrutura básica do Next.js**:
+    ```bash
+    mkdir pages
+    echo "export default function Home() { return <h1>Olá, Next.js!</h1>; }" > pages/index.js
+    ```
+
+6. **Inicie o servidor de desenvolvimento**:
+    ```bash
+    npm run dev
+    ```
+
+---
+
+## 2. Configurando o Prisma
+
+### Passos:
+1. **Instale o Prisma**:
     ```bash
     npm install prisma --save-dev
     ```
 
-3. **Inicialize o Prisma**:
+2. **Inicialize o Prisma**:
     ```bash
     npx prisma init
     ```
 
-4. **Configure o arquivo `.env`**:
-    No arquivo `.env`, defina a variável `DATABASE_URL` para utilizar o SQLite:
+    Isso criará um arquivo `prisma/schema.prisma` e uma pasta `.env`.
+
+3. **Configure o banco de dados no arquivo `.env`**:
+    Exemplo para SQLite:
     ```env
     DATABASE_URL="file:./dev.db"
     ```
 
-5. **Atualize o arquivo `schema.prisma`**:
-    No arquivo `prisma/schema.prisma`, configure o modelo desejado. Exemplo:
-    ```prisma
-    datasource db {
-      provider = "sqlite"
-      url      = env("DATABASE_URL")
-    }
-
-    generator client {
-      provider = "prisma-client-js"
-    }
-
-    model User {
-      id    Int    @id @default(autoincrement())
-      name  String
-      email String @unique
-    }
-    ```
-
-6. **Crie o banco de dados e gere o cliente Prisma**:
+4. **Crie o banco de dados e gere o cliente Prisma**:
     ```bash
     npx prisma migrate dev --name init
     npx prisma generate
     ```
 
-7. **Teste a conexão**:
-    Crie um arquivo `test.js` para verificar a conexão:
-    ```javascript
-    const { PrismaClient } = require('@prisma/client');
-    const prisma = new PrismaClient();
-
-    async function main() {
-      const users = await prisma.user.findMany();
-      console.log(users);
-    }
-
-    main()
-      .catch(e => console.error(e))
-      .finally(async () => await prisma.$disconnect());
-    ```
-
 ---
 
-## 2. Configuração com PostgreSQL
+## 3. Inicializando um Projeto React
 
 ### Passos:
-1. **Crie um novo projeto Node.js**:
+1. **Crie um novo projeto React**:
     ```bash
-    mkdir projeto-postgresql
-    cd projeto-postgresql
-    npm init -y
+    npx create-react-app meu-app
+    cd meu-app
     ```
 
-2. **Instale o Prisma**:
+2. **Inicie o servidor de desenvolvimento**:
     ```bash
-    npm install prisma --save-dev
+    npm start
     ```
 
-3. **Inicialize o Prisma**:
-    ```bash
-    npx prisma init
-    ```
-
-4. **Configure o arquivo `.env`**:
-    No arquivo `.env`, defina a variável `DATABASE_URL` para utilizar o PostgreSQL:
-    ```env
-    DATABASE_URL="postgresql://username:password@localhost:5432/database_name"
-    ```
-
-5. **Atualize o arquivo `schema.prisma`**:
-    No arquivo `prisma/schema.prisma`, configure o modelo desejado. Exemplo:
-    ```prisma
-    datasource db {
-      provider = "postgresql"
-      url      = env("DATABASE_URL")
-    }
-
-    generator client {
-      provider = "prisma-client-js"
-    }
-
-    model User {
-      id    Int    @id @default(autoincrement())
-      name  String
-      email String @unique
-    }
-    ```
-
-6. **Crie o banco de dados e gere o cliente Prisma**:
-    ```bash
-    npx prisma migrate dev --name init
-    npx prisma generate
-    ```
-
-7. **Teste a conexão**:
-    Crie um arquivo `test.js` para verificar a conexão:
+3. **Estrutura básica do React**:
+    O arquivo `src/App.js` já contém um exemplo inicial. Você pode editar para:
     ```javascript
-    const { PrismaClient } = require('@prisma/client');
-    const prisma = new PrismaClient();
-
-    async function main() {
-      const users = await prisma.user.findMany();
-      console.log(users);
+    function App() {
+      return <h1>Olá, React!</h1>;
     }
 
-    main()
-      .catch(e => console.error(e))
-      .finally(async () => await prisma.$disconnect());
+    export default App;
     ```
 
 ---
 
-## 3. Guia para Iniciar um Projeto React Native com Expo
+## 4. Inicializando um Projeto Expo
 
 ### Passos:
 1. **Instale o Expo CLI**:
@@ -152,42 +110,92 @@ Este guia descreve como configurar o arquivo `.env` para dois tipos de banco de 
 
 2. **Crie um novo projeto Expo**:
     ```bash
-    expo init meu-projeto
-    cd meu-projeto
+    expo init meu-app-expo
+    cd meu-app-expo
     ```
 
-3. **Inicie o servidor de desenvolvimento**:
+3. **Escolha o template**:
+    Durante a criação, escolha o template `blank`.
+
+4. **Inicie o servidor de desenvolvimento**:
     ```bash
-    expo start
+    npm start
     ```
 
-4. **Edite o código do aplicativo**:
-    Abra o arquivo `App.js` e comece a editar o código. Exemplo:
+5. **Estrutura básica do Expo**:
+    O arquivo `App.js` já contém um exemplo inicial. Você pode editar para:
     ```javascript
-    import React from 'react';
-    import { Text, View, StyleSheet } from 'react-native';
+    import { Text, View } from 'react-native';
 
     export default function App() {
       return (
-        <View style={styles.container}>
-          <Text>Bem-vindo ao React Native com Expo!</Text>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text>Olá, Expo!</Text>
         </View>
       );
     }
-
-    const styles = StyleSheet.create({
-      container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#fff',
-      },
-    });
     ```
-
-5. **Teste no dispositivo ou emulador**:
-    Use o aplicativo Expo Go no seu dispositivo ou um emulador para visualizar o projeto.
 
 ---
 
-Pronto! Agora você sabe como configurar o arquivo `.env` para SQLite e PostgreSQL utilizando Prisma, além de iniciar um projeto React Native com Expo.  
+## 5. Next.js - Passo a Passo
+
+### Criando o Projeto:
+1. **Execute o comando**:
+    ```bash
+    npx create-next-app@latest nome_do_projeto
+    ```
+
+2. **Responda às perguntas**:
+    - `Ok to proceed? (y)` -> Yes
+    - `Would you like to use TypeScript?` -> No
+    - `Would you like to use ESLint?` -> Yes
+    - `Would you like to use Tailwind CSS?` -> No
+    - `Would you like your code inside a src/ directory?` -> Yes
+    - `Would you like to use App Router? (recommended)` -> Yes
+    - `Would you like to use Turbopack for next dev?` -> Yes
+    - `Would you like to customize the import alias (@/* by default)?` -> No
+
+3. **Configuração do Projeto**:
+    - Renomeie os arquivos:
+        ```bash
+        mv src/app/layout.js src/app/layout.jsx
+        mv src/app/page.js src/app/page.jsx
+        ```
+
+4. **Execute o projeto**:
+    ```bash
+    npm run dev
+    ```
+
+### Possível Erro:
+- **Erro no PowerShell**:
+    - Abra o PowerShell como administrador e execute:
+        ```bash
+        Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
+        Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+        ```
+
+---
+
+## 6. Possíveis Erros e Soluções
+
+### Erro: `npm: command not found`
+- **Causa**: Node.js não está instalado ou não está no PATH.
+- **Solução**: Instale o [Node.js](https://nodejs.org/) e reinicie o terminal.
+
+### Erro: `npx: command not found`
+- **Causa**: Node.js está desatualizado.
+- **Solução**: Atualize o Node.js para a versão mais recente.
+
+### Erro: `DATABASE_URL is not set`
+- **Causa**: Variável de ambiente não configurada.
+- **Solução**: Verifique o arquivo `.env` e reinicie o terminal.
+
+### Erro: `Prisma Client is not generated`
+- **Causa**: O cliente Prisma não foi gerado.
+- **Solução**: Execute `npx prisma generate`.
+
+---
+
+Pronto! Agora você pode criar projetos com Node.js, Next.js, Prisma, React e Expo.
